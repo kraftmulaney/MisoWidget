@@ -16,7 +16,7 @@ public final class AlertsDataType extends ComplexDataType<Alerts> {
    * "DifferentialDrive", a sendable chooser has it set to "String Chooser"; a
    * hypothetical 2D point would have it set to "Point2D".
    */
-  private static final String TYPE_NAME = "Alerts";
+  private static final String TYPE_NAME = "AlertsIdo";
 
   /**
    * The single instance of the point type. By convention, this is a
