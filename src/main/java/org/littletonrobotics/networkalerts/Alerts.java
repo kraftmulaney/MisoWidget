@@ -54,6 +54,10 @@ public final class Alerts extends ComplexData<Alerts> {
    */
   public ObservableList<AlertItem> getCollection() {
     ObservableList<AlertItem> collection = FXCollections.observableArrayList();
+
+    // $TODO - hack
+    collection.add(new AlertItem(AlertType.ERROR, "Ido was here!"));
+
     for (String text : errors) {
       collection.add(new AlertItem(AlertType.ERROR, text));
     }

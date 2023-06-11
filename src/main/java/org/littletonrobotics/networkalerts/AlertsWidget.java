@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 
-@Description(name = "Alerts", dataTypes = Alerts.class, summary = "Displays a list of alerts.")
+@Description(name = "AlertsIdo", dataTypes = Alerts.class, summary = "Displays a list of alerts.")
 @ParametrizedController("AlertsWidget.fxml")
 public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
 
