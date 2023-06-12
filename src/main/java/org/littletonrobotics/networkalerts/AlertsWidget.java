@@ -9,12 +9,15 @@ import edu.wpi.first.shuffleboard.api.widget.SimpleAnnotatedWidget;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 @Description(name = "AlertsIdo", dataTypes = Alerts.class, summary = "Displays a list of alerts.")
@@ -29,129 +32,30 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   private Pane root;
 
   @FXML
-  private ListView<AlertItem> list;
+  private Canvas canvas;
 
   @FXML
   @SuppressWarnings("incomplete-switch")
   private void initialize() {
-    list.setCellFactory(param -> new ListCell<AlertItem>() {
-      @Override
-      protected void updateItem(AlertItem item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setGraphic(null);
-          setText(null);
-        } else {
-          setMinWidth(param.getWidth() - 32);
-          setMaxWidth(param.getWidth() - 32);
-          setPrefWidth(param.getWidth() - 32);
+    //canvas.widthProperty().bind(this.widthProperty());
+    //canvas.heightProperty().bind(this.heightProperty());
 
-          setWrapText(true);
-          setText(item.text);
+    double width = 100; // $TODO canvas.getLayoutBounds().getWidth();
+    double height = 100; // $TODO canvas.getLayoutBounds().getHeight();
 
-          if (item.type == AlertType.LOCAL) {
-            setTextAlignment(TextAlignment.CENTER);
-            setStyle("-fx-alignment: center;");
-            setGraphic(null);
-          } else {
-            setTextAlignment(TextAlignment.LEFT);
-            setStyle("-fx-alignment: left;");
+    canvas.setWidth(width);
+    canvas.setHeight(height);
 
-            ImageView imageView = new ImageView();
-            switch (item.type) {
-              case ERROR:
-                imageView.setImage(errorIcon);
-                break;
-              case WARNING:
-                imageView.setImage(warningIcon);
-                break;
-              case INFO:
-                imageView.setImage(infoIcon);
-                break;
-            }
-            imageView.setFitHeight(20);
-            imageView.setFitWidth(20);
-            imageView.setTranslateX(-3);
-            imageView.setSmooth(true);
-            setGraphic(imageView);
-          }
-        }
-      }
-    });
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    gc.clearRect(0, 0, width, height);
 
-    list.setSelectionModel(new NoSelectionModel<AlertItem>());
-    list.itemsProperty().bind(dataOrDefault.map(Alerts::getCollection));
+    gc.setStroke(Color.BLACK);
+    gc.setLineWidth(2);
+    gc.strokeLine(0, height / 2, width, height / 2);
   }
 
   @Override
   public Pane getView() {
     return root;
-  }
-
-  public class NoSelectionModel<T> extends MultipleSelectionModel<T> {
-
-    @Override
-    public ObservableList<Integer> getSelectedIndices() {
-      return FXCollections.emptyObservableList();
-    }
-
-    @Override
-    public ObservableList<T> getSelectedItems() {
-      return FXCollections.emptyObservableList();
-    }
-
-    @Override
-    public void selectIndices(int index, int... indices) {
-    }
-
-    @Override
-    public void selectAll() {
-    }
-
-    @Override
-    public void selectFirst() {
-    }
-
-    @Override
-    public void selectLast() {
-    }
-
-    @Override
-    public void clearAndSelect(int index) {
-    }
-
-    @Override
-    public void select(int index) {
-    }
-
-    @Override
-    public void select(T obj) {
-    }
-
-    @Override
-    public void clearSelection(int index) {
-    }
-
-    @Override
-    public void clearSelection() {
-    }
-
-    @Override
-    public boolean isSelected(int index) {
-      return false;
-    }
-
-    @Override
-    public boolean isEmpty() {
-      return true;
-    }
-
-    @Override
-    public void selectPrevious() {
-    }
-
-    @Override
-    public void selectNext() {
-    }
   }
 }
