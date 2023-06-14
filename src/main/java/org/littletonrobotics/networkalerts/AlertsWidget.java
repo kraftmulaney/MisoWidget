@@ -37,21 +37,26 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   @FXML
   @SuppressWarnings("incomplete-switch")
   private void initialize() {
-    //canvas.widthProperty().bind(this.widthProperty());
-    //canvas.heightProperty().bind(this.heightProperty());
+    canvas.widthProperty().bind(root.widthProperty());
+    canvas.heightProperty().bind(root.heightProperty());
 
-    double width = 100; // $TODO canvas.getLayoutBounds().getWidth();
-    double height = 100; // $TODO canvas.getLayoutBounds().getHeight();
+    // Redraw when size changes
+    canvas.widthProperty().addListener(evt -> DrawLine());
+    canvas.heightProperty().addListener(evt -> DrawLine());
+  }
 
-    canvas.setWidth(width);
-    canvas.setHeight(height);
+  private void DrawLine() {
+    double width = root.getWidth();
+    double height = root.getHeight();
 
-    GraphicsContext gc = canvas.getGraphicsContext2D();
-    gc.clearRect(0, 0, width, height);
+    if (width != 0 && height != 0) {
+      GraphicsContext gc = canvas.getGraphicsContext2D();
+      gc.clearRect(0, 0, width, height);
 
-    gc.setStroke(Color.BLACK);
-    gc.setLineWidth(2);
-    gc.strokeLine(0, height / 2, width, height / 2);
+      gc.setStroke(Color.BLACK);
+      gc.setLineWidth(2);
+      gc.strokeLine(0, height / 2, width, height / 2);
+    }
   }
 
   @Override
