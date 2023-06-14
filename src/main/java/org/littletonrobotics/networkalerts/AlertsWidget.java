@@ -9,6 +9,7 @@ import edu.wpi.first.shuffleboard.api.widget.SimpleAnnotatedWidget;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ListCell;
@@ -45,6 +46,21 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
     canvas.heightProperty().addListener(evt -> DrawLine());
   }
 
+  private Image calcResizedImage(Image image, double width, double height) {
+    ImageView imageView = new ImageView(image);
+
+    imageView.setFitWidth(width);
+    imageView.setFitHeight(height);
+    imageView.setPreserveRatio(true);
+    imageView.setSmooth(true); // apply smoothing
+
+    SnapshotParameters parameters = new SnapshotParameters();
+    parameters.setFill(Color.TRANSPARENT);
+    Image resizedImage = imageView.snapshot(parameters, null);
+
+    return resizedImage;
+  }
+
   private void DrawLine() {
     double width = root.getWidth();
     double height = root.getHeight();
@@ -56,6 +72,13 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
       gc.setStroke(Color.BLACK);
       gc.setLineWidth(2);
       gc.strokeLine(0, height / 2, width, height / 2);
+
+      // $TODO - I could be better about caching it
+      Image resizedImage = calcResizedImage(warningIcon, 20, 20);
+
+      double imageX = (width - resizedImage.getWidth()) / 2;
+      double imageY = (height - resizedImage.getHeight()) / 2;
+      gc.drawImage(resizedImage, imageX, imageY);
     }
   }
 
