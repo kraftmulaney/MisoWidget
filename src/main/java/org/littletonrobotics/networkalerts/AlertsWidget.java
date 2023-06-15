@@ -28,6 +28,9 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   private Image errorIcon = new Image(getClass().getResourceAsStream("img/error.png"));
   private Image warningIcon = new Image(getClass().getResourceAsStream("img/warning.png"));
   private Image infoIcon = new Image(getClass().getResourceAsStream("img/info.png"));
+  // $TODO private Image ArmBaseIcon = new
+  // Image(getClass().getResourceAsStream("img/armbase.png"));
+  private Image PivotArmIcon = new Image(getClass().getResourceAsStream("img/PivotArm.png"));
 
   @FXML
   private Pane root;
@@ -69,12 +72,15 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
       GraphicsContext gc = canvas.getGraphicsContext2D();
       gc.clearRect(0, 0, width, height);
 
-      gc.setStroke(Color.BLACK);
-      gc.setLineWidth(2);
-      gc.strokeLine(0, height / 2, width, height / 2);
+      /*
+       * $TODO
+       * gc.setStroke(Color.BLACK);
+       * gc.setLineWidth(2);
+       * gc.strokeLine(0, height / 2, width, height / 2);
+       */
 
       // $TODO - I could be better about caching it
-      Image resizedImage = calcResizedImage(warningIcon, 20, 20);
+      Image resizedImage = calcResizedImage(PivotArmIcon, 523, 250);
 
       double imageX = (width - resizedImage.getWidth()) / 2;
       double imageY = (height - resizedImage.getHeight()) / 2;
