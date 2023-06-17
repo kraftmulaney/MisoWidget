@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Rotate;
 
 @Description(name = "AlertsIdo", dataTypes = Alerts.class, summary = "Displays a list of alerts.")
 @ParametrizedController("AlertsWidget.fxml")
@@ -50,12 +51,19 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   }
 
   private Image calcResizedImage(Image image, double width, double height) {
+    double pivotX = 167;
+    double pivotY = 340;
+
     ImageView imageView = new ImageView(image);
 
     imageView.setFitWidth(width);
     imageView.setFitHeight(height);
     imageView.setPreserveRatio(true);
     imageView.setSmooth(true); // apply smoothing
+
+    // Apply rotation
+    Rotate rotate = new Rotate(90, pivotX, pivotY);
+    imageView.getTransforms().add(rotate);
 
     SnapshotParameters parameters = new SnapshotParameters();
     parameters.setFill(Color.TRANSPARENT);
