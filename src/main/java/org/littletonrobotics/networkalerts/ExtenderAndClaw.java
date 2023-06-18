@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  * Constructs image of Extender and Claw, into a single
  * image.
  */
-public class ExtenderAndClaw {
+public class ExtenderAndClaw {  
   private final Image m_armExtenderImage = new Image(getClass().getResourceAsStream(
       "img/ArmExtender.png"));
   private final Image m_armClawClosedImage = new Image(getClass().getResourceAsStream(
@@ -18,23 +18,28 @@ public class ExtenderAndClaw {
   private final Image m_armClawOpenedImage = new Image(getClass().getResourceAsStream(
       "img/ArmClawOpen.png"));
 
+  private Image m_cachedImage;
+  private ExtenderPosition m_lastPosition;
+
   /**
    * Constructor.
    */
   public ExtenderAndClaw() {
+    m_cachedImage = null;
+    m_lastPosition = null;
   }
 
   /**
-   * Returns an image of the extender and claw.
+   * This actually renders the image of extender plus claw on each call.
    */
-  public Image getExtenderAndClawImage(boolean isClawOpen) {
-    Image clawToUse = isClawOpen
+  private Image getExtenderAndClawImageHelper(ExtenderPosition position) {
+    Image clawToUse = position.m_isClawOpen
         ? m_armClawOpenedImage :
         m_armClawClosedImage;
 
     // The open claw needs to be shifted left a few pixels, to avoid gap between it
     // and the exxtender.
-    double pxLeftMarginClaw = isClawOpen
+    double pxLeftMarginClaw = position.m_isClawOpen
         ? Constants.m_OpenClawMarginPixels
         : Constants.m_ClosedClawMarginPixels;
 
@@ -64,6 +69,30 @@ public class ExtenderAndClaw {
     // Create snapshot of combined image
     SnapshotParameters parameters = new SnapshotParameters();
     parameters.setFill(Color.TRANSPARENT);
-    return group.snapshot(parameters, null);
+    return group.snapshot(parameters, null);  
+  }
+
+  private boolean isCachedImageReusable(ExtenderPosition newPosition) {
+    return m_cachedImage != null
+        && m_lastPosition != null
+        && m_lastPosition.equals(newPosition);    
+  }
+
+  /**
+   * Returns an image of the extender and claw.
+   */
+  public Image getExtenderAndClawImage(ExtenderPosition position) {
+    Image resultImage = null;
+
+    if (isCachedImageReusable(position)) {
+      resultImage = m_cachedImage;
+    }
+    else {
+      resultImage = getExtenderAndClawImageHelper(position);
+      m_cachedImage = resultImage;
+      m_lastPosition = position;
+    }
+
+    return resultImage;
   }
 }
