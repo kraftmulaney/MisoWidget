@@ -11,12 +11,7 @@ public class ExtenderPosition {
    * Constructor.
    */
   public ExtenderPosition(double extendedPercent, boolean isClawOpen) {
-    if (extendedPercent < 0) {
-      extendedPercent = 0;
-    }
-    else if (extendedPercent > 1) {
-      extendedPercent = 1;
-    }
+    extendedPercent = ImageUtilities.clamp(extendedPercent, 0, 1);
 
     m_extendedPercent = extendedPercent;
     m_isClawOpen = isClawOpen;
@@ -36,4 +31,3 @@ public class ExtenderPosition {
         && m_isClawOpen == other.m_isClawOpen;
   }
 }
-

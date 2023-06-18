@@ -24,4 +24,19 @@ public class ImageUtilities {
 
     return view;
   }
+
+  public static double clamp(double val, double min, double max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  /**
+   * Linearly interpolates between two values.
+   */
+  public static double linearInterpolation(double percent, double start, double end) {
+    double result = start + (end - start) * percent;
+
+    return clamp(result,
+        Math.min(start, end),
+        Math.max(start, end));
+  }
 }
