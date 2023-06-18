@@ -8,5 +8,6 @@ public class Constants {
 
   public static final double m_OpenClawMarginPixels = 4;
   public static final double m_ClosedClawMarginPixels = 0;
-
+  public static final double m_FullyExtendedTrimRightPixels = 0;
+  public static final double m_FullyRetractedTrimRightPixles = 200;
 }
