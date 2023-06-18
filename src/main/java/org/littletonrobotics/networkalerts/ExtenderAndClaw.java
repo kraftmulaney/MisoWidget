@@ -1,5 +1,6 @@
 package org.littletonrobotics.networkalerts;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
@@ -36,6 +37,7 @@ public class ExtenderAndClaw {
     Image clawToUse = position.m_isClawOpen
         ? m_armClawOpenedImage :
         m_armClawClosedImage;
+    double trimExtenderRightPixels = 200;
 
     // The open claw needs to be shifted left a few pixels, to avoid gap between it
     // and the exxtender.
@@ -43,7 +45,14 @@ public class ExtenderAndClaw {
         ? Constants.m_OpenClawMarginPixels
         : Constants.m_ClosedClawMarginPixels;
 
-    ImageView extenderView = ImageUtilities.getScaledViewOfImage(m_armExtenderImage, null);
+    // We shrink the extender image to "retract" the arm
+    Rectangle2D extenderRect = new Rectangle2D(
+        0,
+        0,
+        m_armExtenderImage.getWidth() - trimExtenderRightPixels,
+        m_armExtenderImage.getHeight());
+
+    ImageView extenderView = ImageUtilities.getScaledViewOfImage(m_armExtenderImage, extenderRect);
     ImageView clawView =  ImageUtilities.getScaledViewOfImage(clawToUse, null);
 
     double groupHeight = Math.max(
@@ -55,7 +64,7 @@ public class ExtenderAndClaw {
     Group group = new Group(extenderView, clawView);
 
     clawView.setLayoutX(
-          (m_armExtenderImage.getWidth() - pxLeftMarginClaw)
+          ((m_armExtenderImage.getWidth() - pxLeftMarginClaw) - trimExtenderRightPixels)
            * Constants.m_scaleImages);
 
     clawView.setLayoutY(
