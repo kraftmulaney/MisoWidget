@@ -70,7 +70,8 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
       GraphicsContext gc = canvas.getGraphicsContext2D();
       gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
 
-      Image resizedImage = m_extenderAndClaw.getExtenderAndClawImage(false);
+      Image resizedImage = m_extenderAndClaw.getExtenderAndClawImage(
+        new ExtenderPosition(1.0, false));
 
       double imageX = (m_tileWidth - resizedImage.getWidth()) / 2;
       double imageY = (m_tileHeight - resizedImage.getHeight()) / 2;
