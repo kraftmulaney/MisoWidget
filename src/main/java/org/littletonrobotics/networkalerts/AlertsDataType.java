@@ -31,7 +31,8 @@ public final class AlertsDataType extends ComplexDataType<Alerts> {
 
   @Override
   public Function<Map<String, Object>, Alerts> fromMap() {
-    return map -> new Alerts((String[]) map.getOrDefault("errors", new String[] {}),
+    return map -> new Alerts(
+        (String[]) map.getOrDefault("errors", new String[] {}),
         (String[]) map.getOrDefault("warnings", new String[] {}),
         (String[]) map.getOrDefault("infos", new String[] {}));
   }
