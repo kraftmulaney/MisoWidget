@@ -1,7 +1,6 @@
 package org.littletonrobotics.networkalerts;
 
 import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
-
 import java.util.Map;
 import java.util.function.Function;
 
@@ -32,13 +31,13 @@ public final class AlertsDataType extends ComplexDataType<Alerts> {
   @Override
   public Function<Map<String, Object>, Alerts> fromMap() {
     return map -> new Alerts(
-        (String[]) map.getOrDefault("errors", new String[] {}),
-        (String[]) map.getOrDefault("warnings", new String[] {}),
-        (String[]) map.getOrDefault("infos", new String[] {}));
+        (double) map.getOrDefault("percentRaised", 0.0),
+        (double) map.getOrDefault("percentExtended", 0.0),
+        (boolean) map.getOrDefault("isClawOpen", false));
   }
 
   @Override
   public Alerts getDefaultValue() {
-    return new Alerts(new String[] {}, new String[] {}, new String[] {});
+    return new Alerts(0.0, 0.0, false);
   }
 }
