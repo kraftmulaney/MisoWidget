@@ -2,8 +2,6 @@ package org.littletonrobotics.networkalerts;
 
 import edu.wpi.first.shuffleboard.api.data.ComplexData;
 import java.util.Map;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * Represents a list of alerts.
@@ -21,6 +19,18 @@ public final class Alerts extends ComplexData<Alerts> {
     this.m_percentRaised = percentRaised;
     this.m_percentExtended = percentExtended;
     this.m_isClawOpen = isClawOpen;
+  }
+
+  public double getPercentRaised() {
+    return ImageUtilities.clamp(m_percentRaised, 0, 1);
+  }
+
+  public double getPercentExtended() {
+    return ImageUtilities.clamp(m_percentExtended, 0, 1);
+  }
+
+  public boolean getIsClawOpen() {
+    return m_isClawOpen;
   }
 
   @Override
