@@ -35,6 +35,9 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
     // Redraw when size changes
     canvas.widthProperty().addListener(evt -> redrawRobotArm());
     canvas.heightProperty().addListener(evt -> redrawRobotArm());
+
+    // Redraw on data change
+    dataProperty().addListener((newValue) -> redrawRobotArm());
   }
 
   /*
