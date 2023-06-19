@@ -41,8 +41,8 @@ public class ExtenderAndClaw {
     // Show full image if 100% extended.  Show cutoff image if 0% extended.
     double trimExtenderRightPixels = ImageUtilities.linearInterpolation(
         position.m_extendedPercent,
-        Constants.m_FullyExtendedTrimRightPixels,
-        Constants.m_FullyRetractedTrimRightPixles);
+        Constants.m_FullyRetractedTrimRightPixles,
+        Constants.m_FullyExtendedTrimRightPixels);
 
     // The open claw needs to be shifted left a few pixels, to avoid gap between it
     // and the exxtender.

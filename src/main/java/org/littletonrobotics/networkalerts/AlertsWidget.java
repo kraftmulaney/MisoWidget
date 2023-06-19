@@ -73,17 +73,17 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
       GraphicsContext gc = canvas.getGraphicsContext2D();
       gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
 
+      // Get arm position from Network Tables
+      Alerts armData = getData();
+
       Image resizedImage = m_extenderAndClaw.getExtenderAndClawImage(
-        new ExtenderPosition(1.0, false));
+        new ExtenderPosition(
+            armData.getPercentExtended(),
+            armData.getIsClawOpen()));
 
       double imageX = (m_tileWidth - resizedImage.getWidth()) / 2;
       double imageY = (m_tileHeight - resizedImage.getHeight()) / 2;
       gc.drawImage(resizedImage, imageX, imageY);
-
-      // $TODO
-      Alerts a = getData();
-      String s = a.toHumanReadableString();
-      System.out.print(s);
     }
   }
 
