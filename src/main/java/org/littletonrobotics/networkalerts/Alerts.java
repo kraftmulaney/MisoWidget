@@ -1,100 +1,44 @@
 package org.littletonrobotics.networkalerts;
 
 import edu.wpi.first.shuffleboard.api.data.ComplexData;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.Map;
 
 /**
  * Represents a list of alerts.
  */
 public final class Alerts extends ComplexData<Alerts> {
 
-  private final String[] errors;
-  private final String[] warnings;
-  private final String[] infos;
+  private final double m_percentRaised;
+  private final double m_percentExtended;
+  private final boolean m_isClawOpen;
 
   /**
    * Creates a new NetworkAlerts object.
-   *
-   * @param errors   List of active error alerts
-   * @param warnings List of active warning alerts
-   * @param infos    List of active info alerts
    */
-  public Alerts(String[] errors, String[] warnings, String[] infos) {
-    this.errors = errors;
-    this.warnings = warnings;
-    this.infos = infos;
-  }
-
-  /**
-   * Gets the list of error alerts.
-   */
-  public String[] getErrors() {
-    return errors;
-  }
-
-  /**
-   * Gets the list of warning alerts.
-   */
-  public String[] getWarnings() {
-    return warnings;
-  }
-
-  /**
-   * Gets the list of info alerts.
-   */
-  public String[] getInfos() {
-    return infos;
-  }
-
-  /**
-   * Gets a collection of all alerts.
-   */
-  public ObservableList<AlertItem> getCollection() {
-    ObservableList<AlertItem> collection = FXCollections.observableArrayList();
-
-    // $TODO - hack
-    collection.add(new AlertItem(AlertType.ERROR, "Ido was here!"));
-
-    for (String text : errors) {
-      collection.add(new AlertItem(AlertType.ERROR, text));
-    }
-    for (String text : warnings) {
-      collection.add(new AlertItem(AlertType.WARNING, text));
-    }
-    for (String text : infos) {
-      collection.add(new AlertItem(AlertType.INFO, text));
-    }
-    if (collection.size() == 0) {
-      collection.add(new AlertItem(AlertType.LOCAL, "(Nothing to report)"));
-    }
-    return collection;
+  public Alerts(double percentRaised, double percentExtended, boolean isClawOpen) {
+    this.m_percentRaised = percentRaised;
+    this.m_percentExtended = percentExtended;
+    this.m_isClawOpen = isClawOpen;
   }
 
   @Override
   public String toHumanReadableString() {
-    return Integer.toString(errors.length) + " error(s), " + Integer.toString(warnings.length) + " warning(s), "
-        + Integer.toString(infos.length) + " info(s)";
+    return Double.toString(Math.round(m_percentRaised * 100))
+        + "% raised, "
+        + Double.toString(Math.round(m_percentExtended * 100))
+        + "% extended, "
+        + (m_isClawOpen ? "open" : "closed");
   }
 
   @Override
   public Map<String, Object> asMap() {
-    return Map.of("errors", errors, "warnings", warnings, "infos", infos);
-  }
-
-  public static class AlertItem {
-    public final AlertType type;
-    public final String text;
-
-    public AlertItem(AlertType type, String text) {
-      this.type = type;
-      this.text = text;
-    }
-  }
-
-  public static enum AlertType {
-    ERROR, WARNING, INFO, LOCAL
+    return Map.of("percentRaised",
+        m_percentRaised,
+        "percentExtended",
+        m_percentExtended,
+        "isClawOpen",
+        m_isClawOpen);
   }
 }

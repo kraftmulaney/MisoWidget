@@ -76,6 +76,11 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
       double imageX = (m_tileWidth - resizedImage.getWidth()) / 2;
       double imageY = (m_tileHeight - resizedImage.getHeight()) / 2;
       gc.drawImage(resizedImage, imageX, imageY);
+
+      // $TODO
+      Alerts a = getData();
+      String s = a.toHumanReadableString();
+      System.out.print(s);
     }
   }
 
