@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 /**
  * This Widget shows a robot arm.
  */
+// $TODO - Does name matter here?
 @Description(name = "AlertsIdo", dataTypes = Alerts.class, summary = "Displays a list of alerts.")
 @ParametrizedController("AlertsWidget.fxml")
 public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {

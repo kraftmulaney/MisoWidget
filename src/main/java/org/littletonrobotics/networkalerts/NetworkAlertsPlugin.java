@@ -11,6 +11,7 @@ import java.util.Map;
 /**
  * A plugin for displaying persistent alerts sent over NetworkTables.
  */
+// $TODO - Does name matter here?
 @Description(group = "org.littletonrobotics", name = "NetworkAlerts", version = "1.0.0", summary = "A plugin for displaying persistent alerts sent over NetworkTables.")
 public final class NetworkAlertsPlugin extends Plugin {
 
