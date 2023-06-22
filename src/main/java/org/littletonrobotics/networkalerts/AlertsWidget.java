@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 /**
  * This Widget shows a robot arm.
@@ -18,6 +19,8 @@ import javafx.scene.layout.Pane;
 public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   private double m_tileWidth;
   private double m_tileHeight;
+  private double m_smallCanvasWidth;
+  private double m_smallCanvasHeight;
   private ExtenderAndClaw m_extenderAndClaw = new ExtenderAndClaw();
 
   @FXML
@@ -29,16 +32,24 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   private Canvas canvas;
 
   @FXML
+  @SuppressWarnings("checkstyle:MemberNameCheck")
+  private Canvas smallCanvas;
+
+  @FXML
   private void initialize() {
+    // Save the current size of smallCanvas, which is set in the FXML file and never changes
+    m_smallCanvasWidth = smallCanvas.getWidth();
+    m_smallCanvasHeight = smallCanvas.getHeight();
+
     canvas.widthProperty().bind(root.widthProperty());
     canvas.heightProperty().bind(root.heightProperty());
 
     // Redraw when size changes
-    canvas.widthProperty().addListener(evt -> redrawRobotArm());
-    canvas.heightProperty().addListener(evt -> redrawRobotArm());
+    canvas.widthProperty().addListener(evt -> resizeCanvas());
+    canvas.heightProperty().addListener(evt -> resizeCanvas());
 
     // Redraw on data change
-    dataProperty().addListener((newValue) -> redrawRobotArm());
+    dataProperty().addListener((newValue) -> redraw());
   }
 
   /*
@@ -67,25 +78,76 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   */
 
   private void redrawRobotArm() {
+    // Clear the entire visible area
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
+
+    // $TODO
+    gc.setFill(Color.AQUA);
+    gc.fillRect(0, 0, m_tileWidth, m_tileHeight);
+    GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
+    gcSmall.setFill(Color.ROYALBLUE);
+    gcSmall.fillRect(0, 0, m_smallCanvasWidth, m_smallCanvasHeight);
+
+    // Get arm position from Network Tables
+    Alerts armData = getData();
+
+    Image resizedImage = m_extenderAndClaw.getExtenderAndClawImage(
+      new ExtenderPosition(
+          armData.getPercentExtended(),
+          armData.getIsClawOpen()));
+
+    double imageX = (m_smallCanvasWidth - resizedImage.getWidth()) / 2;
+    double imageY = (m_smallCanvasHeight - resizedImage.getHeight()) / 2;
+    gcSmall.drawImage(resizedImage, imageX, imageY);
+  }
+
+  private void drawMessageTooSmall() {
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
+
+    GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
+    gcSmall.clearRect(0, 0, m_smallCanvasWidth, m_smallCanvasHeight);
+
+    gc.setFill(Color.LIGHTGRAY);
+    gc.fillRect(0, 0, m_tileWidth, m_tileHeight);
+
+    gc.setFill(Color.BLACK);
+    gc.fillText("Window is too small", 10, 20);
+  }
+
+  private void redraw() {
+    if (m_tileWidth != 0 && m_tileHeight != 0) {
+
+      if (doesCanvasFitRobotArm()) {
+        redrawRobotArm();
+      }
+      else {
+        drawMessageTooSmall();
+      }
+    }
+  }
+
+  private boolean doesCanvasFitRobotArm() {
+    return m_smallCanvasWidth <= m_tileWidth
+        && m_smallCanvasHeight <= m_tileHeight;
+  }
+
+  private void resizeCanvas() {
     m_tileWidth = root.getWidth();
     m_tileHeight = root.getHeight();
 
-    if (m_tileWidth != 0 && m_tileHeight != 0) {
-      GraphicsContext gc = canvas.getGraphicsContext2D();
-      gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
-
-      // Get arm position from Network Tables
-      Alerts armData = getData();
-
-      Image resizedImage = m_extenderAndClaw.getExtenderAndClawImage(
-        new ExtenderPosition(
-            armData.getPercentExtended(),
-            armData.getIsClawOpen()));
-
-      double imageX = (m_tileWidth - resizedImage.getWidth()) / 2;
-      double imageY = (m_tileHeight - resizedImage.getHeight()) / 2;
-      gc.drawImage(resizedImage, imageX, imageY);
+    if (doesCanvasFitRobotArm()) {
+      smallCanvas.setLayoutX(m_tileWidth / 2.0 - m_smallCanvasWidth / 2.0);
+      smallCanvas.setLayoutY(m_tileHeight / 2.0 - m_smallCanvasHeight / 2.0);
     }
+    else {
+      // Too small to draw the Robot Arm
+      smallCanvas.setLayoutX(0);
+      smallCanvas.setLayoutY(0);
+    }
+
+    redraw();
   }
 
   @Override
@@ -93,3 +155,4 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
     return root;
   }
 }
+
