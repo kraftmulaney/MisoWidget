@@ -1,5 +1,7 @@
 package org.littletonrobotics.networkalerts;
 
+import javafx.scene.Group;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -19,21 +21,16 @@ public class RobotArmRenderer {
   /**
    * Redraw the entire robot arm.
    */
-  public void redrawRobotArm(
-      GraphicsContext gcSmall,
-      double smallCanvasWidth,
-      double smallCanvasHeight,
+  public Image redrawRobotArm(
       ArmPosition armPosition,
       ExtenderPosition extenderPosition) {
 
-    gcSmall.setFill(Color.ROYALBLUE);
-    gcSmall.fillRect(0, 0, smallCanvasWidth, smallCanvasHeight);
+    Group extenderAndClawGroup = m_extenderAndClaw.getExtenderAndClawGroup(extenderPosition);
 
-    Image resizedImage = m_extenderAndClaw.getExtenderAndClawImage(extenderPosition);
-
-    double imageX = (smallCanvasWidth - resizedImage.getWidth()) / 2;
-    double imageY = (smallCanvasHeight - resizedImage.getHeight()) / 2;
-    gcSmall.drawImage(resizedImage, imageX, imageY);
+    // $TODO - Cache the final image snapshot and only redraw when armPosition changes
+    SnapshotParameters parameters = new SnapshotParameters();
+    parameters.setFill(Color.TRANSPARENT);
+    return extenderAndClawGroup.snapshot(parameters, null);
   }
 }
 

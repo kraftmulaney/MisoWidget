@@ -110,13 +110,20 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
         ArmPosition armPosition = new ArmPosition(
             armData.getPercentRaised());
 
-        GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
-        m_robotArmRenderer.redrawRobotArm(
-            gcSmall,
-            m_smallCanvasWidth,
-            m_smallCanvasHeight,
+        Image extenderAndClawImage = m_robotArmRenderer.redrawRobotArm(
             armPosition,
             extenderPosition);
+
+        GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
+        gcSmall.setFill(Color.ROYALBLUE);
+        gcSmall.fillRect(0, 0, m_smallCanvasWidth, m_smallCanvasHeight);
+
+        double imageX = (
+            m_smallCanvasWidth - extenderAndClawImage.getWidth()) / 2;
+        double imageY = (
+            m_smallCanvasHeight - extenderAndClawImage.getHeight()) / 2;
+
+        gcSmall.drawImage(extenderAndClawImage, imageX, imageY);
       }
       else {
         drawMessageTooSmall();
