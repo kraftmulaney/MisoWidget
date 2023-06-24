@@ -118,10 +118,8 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
         gcSmall.setFill(Color.ROYALBLUE);
         gcSmall.fillRect(0, 0, m_smallCanvasWidth, m_smallCanvasHeight);
 
-        double imageX = (
-            m_smallCanvasWidth - armImage.getWidth()) / 2;
-        double imageY = (
-            m_smallCanvasHeight - armImage.getHeight()) / 2;
+        double imageX = 0;
+        double imageY = m_smallCanvasHeight - armImage.getHeight();
 
         gcSmall.drawImage(armImage, imageX, imageY);
       }
