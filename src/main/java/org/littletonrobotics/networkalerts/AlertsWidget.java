@@ -93,6 +93,7 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
             extenderPosition);
 
         GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
+        gcSmall.clearRect(0, 0, m_smallCanvasWidth, m_smallCanvasHeight);
 
         /*
         gcSmall.setFill(Color.ROYALBLUE);
