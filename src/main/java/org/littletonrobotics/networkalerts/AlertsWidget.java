@@ -21,7 +21,7 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   private double m_tileHeight;
   private double m_smallCanvasWidth;
   private double m_smallCanvasHeight;
-  private ExtenderAndClaw m_extenderAndClaw = new ExtenderAndClaw();
+  private RobotArmRenderer m_robotArmRenderer = new RobotArmRenderer();
 
   @FXML
   @SuppressWarnings("checkstyle:MemberNameCheck")
@@ -77,31 +77,6 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   }
   */
 
-  private void redrawRobotArm() {
-    // Clear the entire visible area
-    GraphicsContext gc = canvas.getGraphicsContext2D();
-    gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
-
-    // $TODO
-    gc.setFill(Color.AQUA);
-    gc.fillRect(0, 0, m_tileWidth, m_tileHeight);
-    GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
-    gcSmall.setFill(Color.ROYALBLUE);
-    gcSmall.fillRect(0, 0, m_smallCanvasWidth, m_smallCanvasHeight);
-
-    // Get arm position from Network Tables
-    Alerts armData = getData();
-
-    Image resizedImage = m_extenderAndClaw.getExtenderAndClawImage(
-      new ExtenderPosition(
-          armData.getPercentExtended(),
-          armData.getIsClawOpen()));
-
-    double imageX = (m_smallCanvasWidth - resizedImage.getWidth()) / 2;
-    double imageY = (m_smallCanvasHeight - resizedImage.getHeight()) / 2;
-    gcSmall.drawImage(resizedImage, imageX, imageY);
-  }
-
   private void drawMessageTooSmall() {
     GraphicsContext gc = canvas.getGraphicsContext2D();
     gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
@@ -120,7 +95,28 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
     if (m_tileWidth != 0 && m_tileHeight != 0) {
 
       if (doesCanvasFitRobotArm()) {
-        redrawRobotArm();
+
+        // Clear the full canvas (tile)
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, m_tileWidth, m_tileHeight);        
+        gc.setFill(Color.AQUA);
+        gc.fillRect(0, 0, m_tileWidth, m_tileHeight);
+
+        // Get arm position from Network Tables
+        Alerts armData = getData();
+        ExtenderPosition extenderPosition = new ExtenderPosition(
+            armData.getPercentExtended(),
+            armData.getIsClawOpen());
+        ArmPosition armPosition = new ArmPosition(
+            armData.getPercentRaised());
+
+        GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
+        m_robotArmRenderer.redrawRobotArm(
+            gcSmall,
+            m_smallCanvasWidth,
+            m_smallCanvasHeight,
+            armPosition,
+            extenderPosition);
       }
       else {
         drawMessageTooSmall();
