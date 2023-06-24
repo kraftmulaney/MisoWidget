@@ -6,6 +6,7 @@ package org.littletonrobotics.networkalerts;
 public class Constants {
   public static final double m_scaleImages = 0.25;
 
+  // Claw and extender constants
   public static final double m_OpenClawMarginPixels = 4;
   public static final double m_ClosedClawMarginPixels = 0;
   public static final double m_FullyExtendedTrimRightPixels = 0;
