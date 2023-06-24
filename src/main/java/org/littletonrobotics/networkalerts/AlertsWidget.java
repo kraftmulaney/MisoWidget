@@ -52,31 +52,6 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
     dataProperty().addListener((newValue) -> redraw());
   }
 
-  /*
-  // $TODO - Remove this code.  I left it here for sample of rotation
-  private Image getResizedImage(Image image, double width, double height) {
-    double pivotX = 167;
-    double pivotY = 340;
-
-    ImageView imageView = new ImageView(image);
-
-    imageView.setFitWidth(width);
-    imageView.setFitHeight(height);
-    imageView.setPreserveRatio(true);
-    imageView.setSmooth(true); // apply smoothing
-
-    // Apply rotation
-    Rotate rotate = new Rotate(90, pivotX, pivotY);
-    imageView.getTransforms().add(rotate);
-
-    SnapshotParameters parameters = new SnapshotParameters();
-    parameters.setFill(Color.TRANSPARENT);
-    Image resizedImage = imageView.snapshot(parameters, null);
-
-    return resizedImage;
-  }
-  */
-
   private void drawMessageTooSmall() {
     GraphicsContext gc = canvas.getGraphicsContext2D();
     gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
@@ -98,9 +73,12 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
 
         // Clear the full canvas (tile)
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, m_tileWidth, m_tileHeight);        
+        gc.clearRect(0, 0, m_tileWidth, m_tileHeight);
+
+        /*
         gc.setFill(Color.AQUA);
         gc.fillRect(0, 0, m_tileWidth, m_tileHeight);
+        */
 
         // Get arm position from Network Tables
         Alerts armData = getData();
@@ -115,8 +93,11 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
             extenderPosition);
 
         GraphicsContext gcSmall = smallCanvas.getGraphicsContext2D();
+
+        /*
         gcSmall.setFill(Color.ROYALBLUE);
         gcSmall.fillRect(0, 0, m_smallCanvasWidth, m_smallCanvasHeight);
+        */
 
         double imageX = 0;
         double imageY = m_smallCanvasHeight - armImage.getHeight();
