@@ -3,12 +3,17 @@ package org.littletonrobotics.networkalerts;
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
  * Draws entire Robot arm.
  */
 public class RobotArmRenderer {
+  private final Image m_robotBaseImage = new Image(getClass().getResourceAsStream(
+      "img/ArmTallerBase.png"));
+
   private ExtenderAndClaw m_extenderAndClaw = new ExtenderAndClaw();
   private Image m_cachedImage;
   private ArmPosition m_lastArmPosition;
@@ -40,10 +45,23 @@ public class RobotArmRenderer {
 
     Group extenderAndClawGroup = m_extenderAndClaw.getExtenderAndClawGroup(extenderPosition);
 
-    // $TODO - Cache the final image snapshot and only redraw when armPosition changes
+    ImageView robotBaseImageView =  ImageUtilities.getScaledViewOfImage(m_robotBaseImage, null);
+  
+    // Create a new Pane to store the images
+    Pane pane = new Pane();
+  
+    // Add the ImageView and extender and claw group to the Pane
+    pane.getChildren().addAll(robotBaseImageView, extenderAndClawGroup);
+  
+    // Set the coordinates for the ImageView and extender and claw group
+    robotBaseImageView.setLayoutX(0);
+    robotBaseImageView.setLayoutY(0);
+    extenderAndClawGroup.setLayoutX(100);
+    extenderAndClawGroup.setLayoutY(50);
+
     SnapshotParameters parameters = new SnapshotParameters();
     parameters.setFill(Color.TRANSPARENT);
-    return extenderAndClawGroup.snapshot(parameters, null);
+    return pane.snapshot(parameters, null);
   }
 
   /**
@@ -68,4 +86,3 @@ public class RobotArmRenderer {
     return resultImage;
   }
 }
-
