@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 
 /**
  * Draws entire Robot arm.
@@ -53,18 +54,42 @@ public class RobotArmRenderer {
     // Add the ImageView and extender and claw group to the Pane
     pane.getChildren().addAll(robotBaseImageView, extenderAndClawGroup);
 
-    // $TODO - Move to constants
-    double pivotCenterX = 92 * Constants.m_scaleImages;
-    double pivotCenterY = 96 * Constants.m_scaleImages;
-    double pivotCenterToExtender = 120 * Constants.m_scaleImages;
-
     // Set the coordinates for the ImageView and extender and claw group
     robotBaseImageView.setLayoutX(0);
     robotBaseImageView.setLayoutY(0);
-    extenderAndClawGroup.setLayoutX(pivotCenterX + pivotCenterToExtender);
+
+    double pivotCenterX = Constants.m_armPivotCenterX * Constants.m_scaleImages;
+    double pivotCenterY = Constants.m_armPivotCenterY * Constants.m_scaleImages;
+    double pivotCenterToExtender = Constants.m_armPivotCenterToExtender * Constants.m_scaleImages;
+
+    // Remove any previous rotation transformation (since this may be a cached image)
+    // However, make sure to ONLY remove rotation transformations, and leave all
+    // other transformations (such as scaling) in place.
+    // Also, note that we remove the rotation BEFORE setting LayoutX and LayoutY,
+    // to avoid the rotation affecting the coordinates.
+    extenderAndClawGroup.getTransforms().removeIf(
+        transform -> transform instanceof Rotate);
+
+    extenderAndClawGroup.setLayoutX(
+        pivotCenterX
+        + pivotCenterToExtender);
+
     extenderAndClawGroup.setLayoutY(
         pivotCenterY
         - (extenderAndClawGroup.getBoundsInParent().getHeight() / 2));
+
+    // Figure out how much to rotate the displayed arm
+    double degreesToRotate = ImageUtilities.linearInterpolation(
+        armPosition.m_raisedPercent,
+        Constants.m_armDisplayRotationLowest,
+        Constants.m_armDisplayRotationHighest);
+
+    // Apply rotation to extender
+    Rotate rotate = new Rotate(
+        degreesToRotate,
+        -1 * (Constants.m_armPivotCenterToExtender * Constants.m_scaleImages),
+        extenderAndClawGroup.getBoundsInParent().getHeight() / 2);
+    extenderAndClawGroup.getTransforms().add(rotate);
 
     SnapshotParameters parameters = new SnapshotParameters();
     parameters.setFill(Color.TRANSPARENT);

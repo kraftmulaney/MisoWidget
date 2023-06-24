@@ -101,7 +101,7 @@ public class ExtenderAndClaw {
       m_cachedGroup = resultGroup;
       m_lastPosition = position;
     }
-
+  
     return resultGroup;
   }
 }
