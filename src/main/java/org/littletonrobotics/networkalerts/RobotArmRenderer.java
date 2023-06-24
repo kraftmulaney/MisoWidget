@@ -52,12 +52,19 @@ public class RobotArmRenderer {
   
     // Add the ImageView and extender and claw group to the Pane
     pane.getChildren().addAll(robotBaseImageView, extenderAndClawGroup);
-  
+
+    // $TODO - Move to constants
+    double pivotCenterX = 92 * Constants.m_scaleImages;
+    double pivotCenterY = 96 * Constants.m_scaleImages;
+    double pivotCenterToExtender = 120 * Constants.m_scaleImages;
+
     // Set the coordinates for the ImageView and extender and claw group
     robotBaseImageView.setLayoutX(0);
     robotBaseImageView.setLayoutY(0);
-    extenderAndClawGroup.setLayoutX(100);
-    extenderAndClawGroup.setLayoutY(50);
+    extenderAndClawGroup.setLayoutX(pivotCenterX + pivotCenterToExtender);
+    extenderAndClawGroup.setLayoutY(
+        pivotCenterY
+        - (extenderAndClawGroup.getBoundsInParent().getHeight() / 2));
 
     SnapshotParameters parameters = new SnapshotParameters();
     parameters.setFill(Color.TRANSPARENT);
