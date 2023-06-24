@@ -12,5 +12,5 @@
       fx:controller="org.littletonrobotics.networkalerts.AlertsWidget"
       fx:id="root">
       <Canvas fx:id="canvas"/>
-      <Canvas fx:id="smallCanvas" width="250" height="250"/>
+      <Canvas fx:id="smallCanvas" width="250" height="300"/>
 </Pane>
