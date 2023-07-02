@@ -1,4 +1,4 @@
-# Shuffleboard Network Alerts Plugin
+# Shuffleboard Animated Robot Arm Plugin
 This plugin provides a widget for displaying an animated Robot Arm.
 
 Thank you to Mechanical Advantage, who designed and built NetworkAlerts widget.  This Robot Arm plugin is based off of NetworkAlerts, which was used as a template:
