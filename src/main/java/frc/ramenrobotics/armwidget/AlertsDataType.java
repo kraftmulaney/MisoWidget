@@ -1,4 +1,4 @@
-package org.littletonrobotics.networkalerts;
+package frc.ramenrobotics.armwidget;
 
 import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
 import java.util.Map;
@@ -15,8 +15,7 @@ public final class AlertsDataType extends ComplexDataType<Alerts> {
    * "DifferentialDrive", a sendable chooser has it set to "String Chooser"; a
    * hypothetical 2D point would have it set to "Point2D".
    */
-  // $TODO - This is the only type that should matter for which widget is selected, right, right?
-  private static final String TYPE_NAME = "AlertsIdo";
+  private static final String TYPE_NAME = Constants.kAnimatedArmWidget;
 
   /**
    * The single instance of the point type. By convention, this is a

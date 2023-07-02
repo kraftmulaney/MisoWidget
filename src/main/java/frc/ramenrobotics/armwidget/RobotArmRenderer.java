@@ -1,4 +1,4 @@
-package org.littletonrobotics.networkalerts;
+package frc.ramenrobotics.armwidget;
 
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
@@ -58,9 +58,9 @@ public class RobotArmRenderer {
     robotBaseImageView.setLayoutX(0);
     robotBaseImageView.setLayoutY(0);
 
-    double pivotCenterX = Constants.m_armPivotCenterX * Constants.m_scaleImages;
-    double pivotCenterY = Constants.m_armPivotCenterY * Constants.m_scaleImages;
-    double pivotCenterToExtender = Constants.m_armPivotCenterToExtender * Constants.m_scaleImages;
+    double pivotCenterX = Constants.kArmPivotCenterX * Constants.m_scaleImages;
+    double pivotCenterY = Constants.kArmPivotCenterY * Constants.m_scaleImages;
+    double pivotCenterToExtender = Constants.kArmPivotCenterToExtender * Constants.m_scaleImages;
 
     // Remove any previous rotation transformation (since this may be a cached image)
     // However, make sure to ONLY remove rotation transformations, and leave all
@@ -81,13 +81,13 @@ public class RobotArmRenderer {
     // Figure out how much to rotate the displayed arm
     double degreesToRotate = ImageUtilities.linearInterpolation(
         armPosition.m_raisedPercent,
-        Constants.m_armDisplayRotationLowest,
-        Constants.m_armDisplayRotationHighest);
+        Constants.kArmDisplayRotationLowest,
+        Constants.kArmDisplayRotationHighest);
 
     // Apply rotation to extender
     Rotate rotate = new Rotate(
         degreesToRotate,
-        -1 * (Constants.m_armPivotCenterToExtender * Constants.m_scaleImages),
+        -1 * (Constants.kArmPivotCenterToExtender * Constants.m_scaleImages),
         extenderAndClawGroup.getBoundsInParent().getHeight() / 2);
     extenderAndClawGroup.getTransforms().add(rotate);
 

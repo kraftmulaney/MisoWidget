@@ -1,4 +1,4 @@
-package org.littletonrobotics.networkalerts;
+package frc.ramenrobotics.armwidget;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;

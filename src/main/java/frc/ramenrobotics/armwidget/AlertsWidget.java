@@ -1,4 +1,4 @@
-package org.littletonrobotics.networkalerts;
+package frc.ramenrobotics.armwidget;
 
 import edu.wpi.first.shuffleboard.api.widget.Description;
 import edu.wpi.first.shuffleboard.api.widget.ParametrizedController;
@@ -13,9 +13,8 @@ import javafx.scene.paint.Color;
 /**
  * This Widget shows a robot arm.
  */
-// $TODO - Does name matter here?
-@Description(name = "AlertsIdo", dataTypes = Alerts.class, summary = "Displays a list of alerts.")
-@ParametrizedController("AlertsWidget.fxml")
+@Description(name = Constants.kAnimatedArmWidget, dataTypes = Alerts.class, summary = "Displays a robot arm.")
+@ParametrizedController("AlertsWidget.fxml") // $TODO - Rename fxml file
 public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
   private double m_tileWidth;
   private double m_tileHeight;

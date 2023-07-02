@@ -1,4 +1,4 @@
-package org.littletonrobotics.networkalerts;
+package frc.ramenrobotics.armwidget;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -39,14 +39,14 @@ public class ExtenderAndClaw {
     // Show full image if 100% extended.  Show cutoff image if 0% extended.
     double trimExtenderRightPixels = ImageUtilities.linearInterpolation(
         position.m_extendedPercent,
-        Constants.m_FullyRetractedTrimRightPixles,
-        Constants.m_FullyExtendedTrimRightPixels);
+        Constants.kFullyRetractedTrimRightPixles,
+        Constants.kFullyExtendedTrimRightPixels);
 
     // The open claw needs to be shifted left a few pixels, to avoid gap between it
     // and the exxtender.
     double pxLeftMarginClaw = position.m_isClawOpen
-        ? Constants.m_OpenClawMarginPixels
-        : Constants.m_ClosedClawMarginPixels;
+        ? Constants.kOpenClawMarginPixels
+        : Constants.kClosedClawMarginPixels;
 
     // We shrink the extender image to "retract" the arm
     Rectangle2D extenderRect = new Rectangle2D(
