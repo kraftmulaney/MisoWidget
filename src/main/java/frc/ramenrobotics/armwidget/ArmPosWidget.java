@@ -13,9 +13,9 @@ import javafx.scene.paint.Color;
 /**
  * This Widget shows a robot arm.
  */
-@Description(name = Constants.kAnimatedArmWidget, dataTypes = Alerts.class, summary = "Displays a robot arm.")
-@ParametrizedController("AlertsWidget.fxml") // $TODO - Rename fxml file
-public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
+@Description(name = Constants.kAnimatedArmWidget, dataTypes = ArmPos.class, summary = "Displays a robot arm.")
+@ParametrizedController("ArmPosWidget.fxml")
+public final class ArmPosWidget extends SimpleAnnotatedWidget<ArmPos> {
   private double m_tileWidth;
   private double m_tileHeight;
   private double m_smallCanvasWidth;
@@ -80,7 +80,7 @@ public final class AlertsWidget extends SimpleAnnotatedWidget<Alerts> {
         */
 
         // Get arm position from Network Tables
-        Alerts armData = getData();
+        ArmPos armData = getData();
         ExtenderPosition extenderPosition = new ExtenderPosition(
             armData.getPercentExtended(),
             armData.getIsClawOpen());

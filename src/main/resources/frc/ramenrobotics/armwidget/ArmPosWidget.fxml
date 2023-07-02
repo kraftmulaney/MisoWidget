@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <Pane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="frc.ramenrobotics.armwidget.AlertsWidget"
+      fx:controller="frc.ramenrobotics.armwidget.ArmPosWidget"
       fx:id="root">
       <Canvas fx:id="canvas"/>
       <Canvas fx:id="smallCanvas" width="250" height="300"/>
