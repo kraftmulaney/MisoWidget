@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Represents data of the {@link Alerts} type.
+ * Represents data of the {@link ArmPos} type.
  */
-public final class AlertsDataType extends ComplexDataType<Alerts> {
+public final class ArmPosDataType extends ComplexDataType<ArmPos> {
 
   /**
    * The name of data of this type as it would appear in a WPILib sendable's
@@ -22,22 +22,22 @@ public final class AlertsDataType extends ComplexDataType<Alerts> {
    * {@code public static final} field and the constructor is private to ensure
    * only a single instance of the data type exists.
    */
-  public static final AlertsDataType Instance = new AlertsDataType();
+  public static final ArmPosDataType Instance = new ArmPosDataType();
 
-  private AlertsDataType() {
-    super(TYPE_NAME, Alerts.class);
+  private ArmPosDataType() {
+    super(TYPE_NAME, ArmPos.class);
   }
 
   @Override
-  public Function<Map<String, Object>, Alerts> fromMap() {
-    return map -> new Alerts(
+  public Function<Map<String, Object>, ArmPos> fromMap() {
+    return map -> new ArmPos(
         (double) map.getOrDefault("percentRaised", 0.0),
         (double) map.getOrDefault("percentExtended", 0.0),
         (boolean) map.getOrDefault("isClawOpen", false));
   }
 
   @Override
-  public Alerts getDefaultValue() {
-    return new Alerts(0.0, 0.0, false);
+  public ArmPos getDefaultValue() {
+    return new ArmPos(0.0, 0.0, false);
   }
 }

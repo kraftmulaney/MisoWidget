@@ -9,25 +9,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A plugin for displaying persistent alerts sent over NetworkTables.
+ * A plugin for displaying Arm Position.
  */
-// $TODO - Does name matter here?
-// $TODO NetworkAlerts
-@Description(group = "frc.ramenrobotics", name = "NetworkAlerts", version = "1.0.0", summary = "Displays a simple Robot Arm.")
-public final class NetworkAlertsPlugin extends Plugin {
+@Description(group = "frc.ramenrobotics", name = "ArmWidget", version = "1.0.0", summary = "Displays a simple Robot Arm.")
+public final class ArmWidgetPlugin extends Plugin {
 
   @Override
   public List<DataType> getDataTypes() {
-    return List.of(AlertsDataType.Instance);
+    return List.of(ArmPosDataType.Instance);
   }
 
   @Override
   public List<ComponentType> getComponents() {
-    return List.of(WidgetType.forAnnotatedWidget(AlertsWidget.class));
+    return List.of(WidgetType.forAnnotatedWidget(ArmPosWidget.class));
   }
 
   @Override
   public Map<DataType, ComponentType> getDefaultComponents() {
-    return Map.of(AlertsDataType.Instance, WidgetType.forAnnotatedWidget(AlertsWidget.class));
+    return Map.of(ArmPosDataType.Instance, WidgetType.forAnnotatedWidget(ArmPosWidget.class));
   }
 }

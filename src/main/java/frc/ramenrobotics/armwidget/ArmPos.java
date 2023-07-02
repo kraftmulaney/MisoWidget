@@ -4,18 +4,18 @@ import edu.wpi.first.shuffleboard.api.data.ComplexData;
 import java.util.Map;
 
 /**
- * Represents a list of alerts.
+ * Represents the currnet position of the Robot Arm.
  */
-public final class Alerts extends ComplexData<Alerts> {
+public final class ArmPos extends ComplexData<ArmPos> {
 
   private final double m_percentRaised;
   private final double m_percentExtended;
   private final boolean m_isClawOpen;
 
   /**
-   * Creates a new NetworkAlerts object.
+   * Constructor.
    */
-  public Alerts(double percentRaised, double percentExtended, boolean isClawOpen) {
+  public ArmPos(double percentRaised, double percentExtended, boolean isClawOpen) {
     this.m_percentRaised = percentRaised;
     this.m_percentExtended = percentExtended;
     this.m_isClawOpen = isClawOpen;
