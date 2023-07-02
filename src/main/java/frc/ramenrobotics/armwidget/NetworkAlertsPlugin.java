@@ -1,4 +1,4 @@
-package org.littletonrobotics.networkalerts;
+package frc.ramenrobotics.armwidget;
 
 import edu.wpi.first.shuffleboard.api.data.DataType;
 import edu.wpi.first.shuffleboard.api.plugin.Description;
@@ -12,7 +12,8 @@ import java.util.Map;
  * A plugin for displaying persistent alerts sent over NetworkTables.
  */
 // $TODO - Does name matter here?
-@Description(group = "org.littletonrobotics", name = "NetworkAlerts", version = "1.0.0", summary = "A plugin for displaying persistent alerts sent over NetworkTables.")
+// $TODO NetworkAlerts
+@Description(group = "frc.ramenrobotics", name = "NetworkAlerts", version = "1.0.0", summary = "Displays a simple Robot Arm.")
 public final class NetworkAlertsPlugin extends Plugin {
 
   @Override

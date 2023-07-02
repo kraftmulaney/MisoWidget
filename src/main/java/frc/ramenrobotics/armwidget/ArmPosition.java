@@ -1,4 +1,4 @@
-package org.littletonrobotics.networkalerts;
+package frc.ramenrobotics.armwidget;
 
 /**
  * Describes current rotation of Arm.
